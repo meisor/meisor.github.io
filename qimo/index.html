@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>Oombrella智能雨伞</title>
+<link rel="stylesheet" href="css/jquery.fullPage.css">
+<style>
+body{color:#333;font-family:"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif}
+h1{font-size:5em;font-family:arial,helvetica;margin:0;padding:0}
+h2{font-size:2em;margin:0 0 18px 0;font-family:arial,helvetica}
+img{-webkit-transition:all 0.7s ease-out;-moz-transition:all 0.7s ease-out;-o-transition:all 0.7s ease-out;transition:all 0.7s ease-out}
+.section{text-align:center;overflow:hidden}
+.wrap{width:1180px;height:100%;margin-left:auto;margin-right:auto;position:relative}
+.box{text-align:left;color:#808080;font-size:1.2em;line-height:1.6em}
+#section0{padding:60px 0}
+#section0 img{height:100%;margin:40px 0 0 0}
+#section1 img{position:absolute;left:40px;top:100px}
+#section1 .box{position:absolute;top:50%;left:50%;margin-top:-192px;margin-left:89px;width:395px;z-index:1}
+#section1 .imgsContainer{display:block;position:absolute;z-index:1;top:42%;left:58%;margin-top:-325px;margin-left:-747px;width:800px;height:696px}
+#section1 img{height:100%}
+@media all and (min-width:620px) and (max-width:800px){#section1 .imgsContainer{margin-top:-278px;margin-left:-685px;width:647px;height:563px}
+}@media all and (max-width:620px){#section1 .imgsContainer{margin-top:-208px;margin-left:-516px;width:534px;height:464px}
+}#iphone2{z-index:10}
+#iphone2.active{-webkit-transform:translate3d(-134px,0px,0px);-moz-transform:translate3d(-134px,0px,0px);-ms-transform:translate3d(-134px,0px,0px);transform:translate3d(-134px,0px,0px)}
+#iphone3{z-index:12}
+#iphone3.active{-webkit-transform:translate3d(213px,0px,0px);-moz-transform:translate3d(213px,0px,0px);-ms-transform:translate3d(213px,0px,0px);transform:translate3d(213px,0px,0px)}
+#iphone4{z-index:11;left:140px}
+#iphone4.active{-webkit-transform:translate3d(548px,0px,0px);-moz-transform:translate3d(548px,0px,0px);-ms-transform:translate3d(548px,0px,0px);transform:translate3d(548px,0px,0px)}
+#section2 img{position:absolute}
+#section2 .imgsContainer,#staticImg .imgsContainer,#section3 .imgsContainer{position:absolute;z-index:1;left:50%;display:block;margin-top:-288px;margin-left:-636px;width:0;height:0;-webkit-transition:all 1.2s ease-in-out;-moz-transition:all 1.2s ease-in-out;-o-transition:all 1.2s ease-in-out;transition:all 1.2s ease-in-out}
+#section2.moveUp .imgsContainer{top:50%}
+#section2.moveDown .imgsContainer,#staticImg .imgsContainer{top:90%}
+#section2.active .imgsContainer{top:50%}
+#section2 .box{top:22%;left:42%;position:absolute;width:582px}
+#iphone-yellow{top:-35px;left:-222px}
+#iphone-red{top:-194px;left:106px}
+#iphone-blue{top:320px;left:448px}
+#iphone-green{left:106px;position:absolute}
+#staticImg{display:block;position:absolute;z-index:1;top:200%;left:0;width:100%;min-width:980px;height:100%;-webkit-transition:all 0.7s ease-out;-moz-transition:all 0.7s ease-out;-o-transition:all 0.7s ease-out;transition:all 0.7s ease-out}
+#staticImg.moveDown{top:300%}
+#staticImg.moveDown .imgsContainer{top:50%}
+#staticImg.moveDown img{top:155px}
+#staticImg.active .imgsContainer{top:50%}
+#staticImg.active img{top:487px}
+#section3 .imgsContainer{top:50%}
+#section3 img{top:155px;left:455px;position:absolute}
+#section3 .box{text-align:center;margin:10% 0 0 0}
+#infoMenu.whiteLinks li:nth-child(1) a,#infoMenu.whiteLinks li:nth-child(2) a,#infoMenu.whiteLinks li:nth-child(3) a{color:#fff}
+#infoMenu{font-family:arial,helvetica}
+.fullPage-tooltip{color:#AAA}
+#fullPage-nav span,.fullPage-slidesNav span{border-color:#AAA}
+#fullPage-nav li .active span,.fullPage-slidesNav .active span{background:#AAA}
+</style>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.fullPage.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$.fn.fullpage({
+			'verticalCentered': false,
+			'anchors': ['page1', 'page2', 'page3', 'page4'],
+			'css3': true,
+			'slidesColor': ['#F0F2F4', '#fff', '#fff', '#fff'],
+			'navigation': true,
+			'navigationPosition': 'right',
+			'navigationTooltips': ['Oombrella', 'Can', 'Forecast', 'Rain'],
+			
+			'afterLoad': function(anchorLink, index){
+				if(index == 2){
+					$('#iphone3, #iphone2, #iphone4').addClass('active');
+				}
+				$('#infoMenu').toggleClass('whiteLinks', index ==4);
+				
+			},
+			
+			'onLeave': function(index, direction){
+				if (index == 3 && direction == 'down'){
+					$('.section').eq(index -1).removeClass('moveDown').addClass('moveUp');
+				}
+				else if(index == 3 && direction == 'up'){
+					$('.section').eq(index -1).removeClass('moveUp').addClass('moveDown');
+				}
+				
+				$('#staticImg').toggleClass('active', (index == 2 && direction == 'down' ) || (index == 4 && direction == 'up'));
+				$('#staticImg').toggleClass('moveDown', index == 3 && direction == 'down');	
+			},
+			
+			afterRender: function(){
+				$('#infoMenu').appendTo('body');
+				
+				$('#githubLink, .twitter-share-button').appendTo('body');
+			}
+
+		});
+	});
+</script>
+</head>
+
+<body>
+
+<div id="staticImg">
+	<div class="imgsContainer">
+		<img src="img/iphone-green.png" alt="iphone" id="iphone-green" />
+	</div>
+</div>
+
+<div class="section " id="section0">
+	<h1>Oombrella：这把伞能预报下雨</h1>
+	<img src="img/iphone1.jpg" alt="iphone" />
+</div>
+
+<div class="section" id="section1">
+	<div class="wrap">
+		<div class="imgsContainer">
+			<img src="img/iphone2.png" alt="iphone" id="iphone2" />
+			<img src="img/iphone3.png" alt="iphone" id="iphone3" />
+		</div>
+		
+		<div class="box">
+			<h2>神奇的智能雨伞</h2>
+			 <strong></strong>  Oombrella是一款全新的高科技雨伞，它不仅能够预报天气，而且不可能丢失。这款智能雨伞和一款智能手机APP同步，会提前30分钟为用户发送天气状况的更新及提示。
+		</div>
+	</div>
+</div>
+
+<div class="section moveDown" id="section2">
+	<div class="wrap">
+		<div class="imgsContainer">
+			<img src="img/iphone-yellow.png" alt="iphone" id="iphone-yellow" />
+			<img src="img/iphone-red.png" alt="iphone" id="iphone-red" />
+			<img src="img/iphone-blue.png" alt="iphone" id="iphone-blue" />
+		</div>
+		
+		<div class="box">
+			<h2>随身的气象站</h2>
+			<strong></strong> 雨伞表面由反射材料制成，内置传感器，可以实时记录光线湿度压强温度等数据。它还会从社交媒体小组采集信息，及时提醒主人是否下雨。如果用户把伞落在饭店或出门忘记带伞，那么它将利用GPS技术发出提醒消息，确保用户不弄丢它。
+		</div>
+	</div>
+</div>
+<div class="section moveDown" id="section3">
+	<div class="wrap">
+		<div class="box">
+			<h2>让我们期待的</h2>
+			今年秋季，它将在全球网络商城和实体商店上市。公司发言人表示，雨伞的零售价定为79欧元。如果你十分钟爱自己手头的雨伞，那也无须担心——该公司还将同时发行一款“Oombrella 胶囊”，它可以将任何雨伞转换为成智能设备。如果它能像玛丽·波平斯一样飞起来就好了。
+		</div>
+	</div>
+	<div class="imgsContainer">
+		<img src="img/iphone-two.png" alt="iphone" id="iphone-two" />
+	</div>
+</div>
+
+
+</body>
+</html>
